@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body{
+            background: url(7.jpg) no-repeat center;
+            background-size: cover;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        .box{
+            width: 400px;
+            perspective: 3000px;
+            margin: 0 auto;
+            border:1px solid green;
+            transform-style: preserve-3d;
+            transition:transform 1s ease;
+        }
+        .btn,.small{
+            width: 400px;
+            height: 100px;
+            border:1px solid red;
+            font-size: 30px;
+            line-height: 100px;
+            text-align: center;
+            background: #ccc;
+            position: relative;
+
+        }
+        .btn{
+            border:1px solid blue;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .small:nth-child(6){
+            background: url(1.jpg) no-repeat center;
+            z-index: 99;
+        }
+        .small:nth-child(2){
+            background: url(2.jpg) no-repeat center;
+            background-size: cover;
+            z-index: 98;
+        }
+        .small:nth-child(3){
+            background: url(3.jpg) no-repeat center;
+            z-index: 97;
+        }
+        .small:nth-child(4){
+            background: url(4.jpg) no-repeat center;
+            z-index: 96;
+        }
+        .small:nth-child(5){
+            background: url(5.jpg) no-repeat center;
+            z-index: 95;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementsByClassName('btn')[0];
+            var small = document.getElementsByClassName('small');
+            var kaiguan = true;
+            btn.onclick = function(){
+                if(kaiguan){
+                    for(var i=0;i<small.length;i++){
+                        small[i].style.cssText="transform:rotateX(180deg);transform-origin:top;transition:transform 1s ease "+(1+(5-i)*1)+"s;"
+                        setTimeout(function(){
+                            var index = small.length;
+                            var t = setInterval(function(){
+                                index--;
+                                if(index==0){
+                                    clearInterval(t);
+                                }
+                                small[index].style.cssText = "transform:translateY("+(index+1)*-100+"px)";
+                            },1000)
+                        },2000);
+
+                    }
+                    kaiguan = false;
+                }else{
+//                    for(var i=0;i<small.length;i++){
+//                        small[i].style.cssText="transform:rotateX(360deg);transform-origin:bottom;transition:transform 1s ease "+(1+i*1)+"s;"
+//                    }
+                    var index=-1;
+                    var t = setInterval(function(){
+                        index++;
+                        if(index==small.length-1){
+                            clearInterval(t);
+                        }
+                        small[index].style.cssText="transform:translateY(-100px)"
+                    },1000)
+                    var indexa = -1;
+                    setTimeout(function(){
+                        var tt = setInterval(function(){
+                            indexa++;
+                            if(indexa==small.length-1){
+                                clearInterval(tt);
+                            }
+                            small[indexa].style.cssText="transform:rotateX(180deg) translateY(100px);transform-origin:bottom;transition:transform 1s ease"
+                        },1000)
+                    },1100)
+                    kaiguan = true;
+                    setTimeout(function(){
+                        for(var i=0;i<small.length;i++){
+                            small[i].style.transform="none";
+                        }
+                    },6000)
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="box">
+        <div class="btn">点击</div>
+        <div class="small"></div>
+        <div class="small"></div>
+        <div class="small"></div>
+        <div class="small"></div>
+        <div class="small"></div>
+    </div>
+</body>
+</html>
